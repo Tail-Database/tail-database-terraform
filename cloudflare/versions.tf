@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "4.39.0"
     }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "3.27.0"
+    }
   }
 }
 
@@ -17,4 +21,9 @@ provider "aws" {
   endpoints {
     s3 = "https://${var.cloudflare_account_id}.r2.cloudflarestorage.com"
   }
+}
+
+// CLOUDFLARE_API_TOKEN env var must be set
+provider "cloudflare" {
+  account_id = var.cloudflare_account_id
 }
