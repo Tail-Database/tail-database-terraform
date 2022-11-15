@@ -4,7 +4,7 @@ variable "cloudflare_account_id" {
 }
 
 variable "r2_access_key" {
-  description = "Cloudflare R2 access key"
+  description = "Cloudflare R2 access key with edit permission"
   type        = string
 }
 

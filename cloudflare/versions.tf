@@ -10,6 +10,7 @@ terraform {
 provider "aws" {
   access_key                  = var.r2_access_key
   secret_key                  = var.r2_secret_key
+  region                      = "auto"
   skip_credentials_validation = true
   skip_region_validation      = true
   skip_requesting_account_id  = true
