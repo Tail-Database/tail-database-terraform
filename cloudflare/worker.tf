@@ -5,7 +5,7 @@ resource "cloudflare_worker_script" "get_tail_script" {
   content = file("${path.module}/scripts/dist/get-tail.js")
 
   r2_bucket_binding {
-    name        = "R2_BUCKET_NAME"
+    name        = "R2_BUCKET"
     bucket_name = "tail-database-tails-${each.value}"
   }
 
