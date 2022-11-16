@@ -1,9 +1,7 @@
 declare var R2_BUCKET: R2Bucket;
 
-const getTail = async (req: Request) => {
-    const url = new URL(req.url);
-    const hash = url.pathname.split('/')[1];
-    const result = await R2_BUCKET.get(`${hash}.json`);
+const searchIndex = async () => {
+    const result = await R2_BUCKET.get(`search_index.json`);
 
     return result ?
         Response.json(
@@ -22,4 +20,4 @@ const getTail = async (req: Request) => {
         );
 };
 
-addEventListener('fetch', event => event.respondWith(getTail(event.request)));
+addEventListener('fetch', event => event.respondWith(searchIndex()));
