@@ -1,8 +1,8 @@
 resource "cloudflare_worker_script" "get_tail_script" {
-  for_each = { for environment in var.environments : environment => environment }
+  for_each   = { for environment in var.environments : environment => environment }
 
   name    = "get-tail"
-  content = file("${path.module}/scripts/get-tail.js")
+  content = file("${path.module}/scripts/dist/get-tail.js")
 
   r2_bucket_binding {
     name        = "R2_BUCKET_NAME"
