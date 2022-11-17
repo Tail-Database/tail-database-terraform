@@ -7,14 +7,22 @@ const tails = async () => {
         Response.json(
             await result.json(),
             {
-                headers: { 'content-type': 'application/json' },
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET',
+                    'content-type': 'application/json'
+                },
                 status: 200
             }
         ) :
         Response.json(
             { error: 'Not found' },
             {
-                headers: { 'content-type': 'application/json' },
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET',
+                    'content-type': 'application/json'
+                },
                 status: 404
             }
         );
