@@ -58,9 +58,6 @@ resource "cloudflare_record" "www" {
   proxied = false
 }
 
-
-
-
 # Domain ownership verification for fcoleman on Keybase
 resource "cloudflare_record" "freddie_keybase" {
   zone_id = cloudflare_zone.taildatabase.id
