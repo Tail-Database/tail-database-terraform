@@ -1,5 +1,5 @@
 resource "cloudflare_worker_script" "get_tail_script" {
-  for_each   = { for environment in var.environments : environment => environment }
+  for_each = { for environment in var.environments : environment => environment }
 
   name    = "get-tail"
   content = file("${path.module}/scripts/dist/get-tail.js")
@@ -21,7 +21,7 @@ resource "cloudflare_worker_script" "get_tail_script" {
 }
 
 resource "cloudflare_worker_script" "search_index_script" {
-  for_each   = { for environment in var.environments : environment => environment }
+  for_each = { for environment in var.environments : environment => environment }
 
   name    = "search-index"
   content = file("${path.module}/scripts/dist/search-index.js")
@@ -43,7 +43,7 @@ resource "cloudflare_worker_script" "search_index_script" {
 }
 
 resource "cloudflare_worker_script" "get_tails_script" {
-  for_each   = { for environment in var.environments : environment => environment }
+  for_each = { for environment in var.environments : environment => environment }
 
   name    = "get-tails"
   content = file("${path.module}/scripts/dist/get-tails.js")

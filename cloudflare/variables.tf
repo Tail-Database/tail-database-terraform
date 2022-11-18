@@ -17,3 +17,8 @@ variable "environments" {
   description = "Supported environments e.g. testnet and mainnet"
   type        = list(string)
 }
+
+variable "zone" {
+  description = "Root domain name"
+  type        = string
+}
