@@ -38,7 +38,7 @@ const tails = async () => {
 
     const response = await result.json<string>();
 
-    await CACHE.put(key, JSON.stringify(response));
+    await CACHE.put(key, JSON.stringify(response), { expirationTtl: 60 * 5 });
 
     return Response.json(
         response,
