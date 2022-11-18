@@ -8,7 +8,7 @@ Cloudflare is used to provide global object storage and caching without being ti
 
 ### R2
 
-R2 buckets are created for each environment (e.g. testnet/mainnet). The buckets store all asset token data that is displayed on the website.
+R2 buckets are created for each environment (e.g. testnet/mainnet). The buckets store all asset token data that is displayed on the website. There are also buckets for storing the UI code.
 
 ### Workers
 
