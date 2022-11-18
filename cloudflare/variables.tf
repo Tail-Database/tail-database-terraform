@@ -22,3 +22,8 @@ variable "zone" {
   description = "Root domain name"
   type        = string
 }
+
+variable "kv_namespace_name" {
+  description = "Workers KV Namespace name"
+  type        = string
+}

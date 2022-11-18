@@ -1,11 +1,14 @@
 declare var R2_BUCKET: R2Bucket;
+declare var CACHE: KVNamespace;
 
 const searchIndex = async () => {
-    const result = await R2_BUCKET.get(`search_index.json`);
+    const key = `search-index`;
 
-    return result ?
-        Response.json(
-            await result.json(),
+    const cachedResponse = await CACHE.get(key);
+
+    if (cachedResponse) {
+        return Response.json(
+            JSON.parse(cachedResponse),
             {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
@@ -14,8 +17,13 @@ const searchIndex = async () => {
                 },
                 status: 200
             }
-        ) :
-        Response.json(
+        )
+    }
+
+    const result = await R2_BUCKET.get(`search_index.json`);
+
+    if (!result) {
+        return Response.json(
             { error: 'Not found' },
             {
                 headers: {
@@ -26,6 +34,23 @@ const searchIndex = async () => {
                 status: 404
             }
         );
+    }
+
+    const response = await result.json<string>();
+
+    await CACHE.put(key, JSON.stringify(response));
+
+    return Response.json(
+        response,
+        {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET',
+                'content-type': 'application/json'
+            },
+            status: 200
+        }
+    );
 };
 
 addEventListener('fetch', event => event.respondWith(searchIndex()));

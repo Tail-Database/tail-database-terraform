@@ -9,6 +9,11 @@ resource "cloudflare_worker_script" "get_tail_script" {
     bucket_name = "tail-database-tails-${each.value}"
   }
 
+  kv_namespace_binding {
+    name         = "CACHE"
+    namespace_id = cloudflare_workers_kv_namespace.namespace[each.value].id
+  }
+
   secret_text_binding {
     name = "R2_ACCESS_KEY"
     text = var.r2_access_key
@@ -31,6 +36,11 @@ resource "cloudflare_worker_script" "search_index_script" {
     bucket_name = "tail-database-tails-${each.value}"
   }
 
+  kv_namespace_binding {
+    name         = "CACHE"
+    namespace_id = cloudflare_workers_kv_namespace.namespace[each.value].id
+  }
+
   secret_text_binding {
     name = "R2_ACCESS_KEY"
     text = var.r2_access_key
@@ -51,6 +61,11 @@ resource "cloudflare_worker_script" "get_tails_script" {
   r2_bucket_binding {
     name        = "R2_BUCKET"
     bucket_name = "tail-database-tails-${each.value}"
+  }
+
+  kv_namespace_binding {
+    name         = "CACHE"
+    namespace_id = cloudflare_workers_kv_namespace.namespace[each.value].id
   }
 
   secret_text_binding {

@@ -6,9 +6,13 @@ This repo contains Terraform for provisioning the infrastructure behind [taildat
 
 Cloudflare is used to provide global object storage and caching without being tied to a single cloud provider.
 
+### KV
+
+Each environment (e.g. testnet/mainnet) gets a KV namespace for caching responses without needing to go to R2 for every request.
+
 ### R2
 
-R2 buckets are created for each environment (e.g. testnet/mainnet). The buckets store all asset token data that is displayed on the website. There are also buckets for storing the UI code.
+R2 buckets are created for each environment. The buckets store all asset token data that is displayed on the website. There are also buckets for storing the UI code.
 
 ### Workers
 
