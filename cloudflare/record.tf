@@ -71,10 +71,10 @@ resource "cloudflare_record" "freddie_keybase" {
 resource "cloudflare_record" "dns" {
   for_each = { for environment in var.environments : environment => environment }
 
-    zone_id = cloudflare_zone.taildatabase.id
-    name    = "${each.value}-api.${var.zone}"
-    value   = "192.0.2.1"
-    type    = "A"
-    ttl     = 1
-    proxied = true
+  zone_id = cloudflare_zone.taildatabase.id
+  name    = "${each.value}-api.${var.zone}"
+  value   = "192.0.2.1"
+  type    = "A"
+  ttl     = 1
+  proxied = true
 }
