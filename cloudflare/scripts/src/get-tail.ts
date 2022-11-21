@@ -3,7 +3,7 @@ declare var CACHE: KVNamespace;
 
 const getTail = async (req: Request) => {
     const url = new URL(req.url);
-    const hash = url.pathname.split('/')[1];
+    const hash = url.pathname.split('/')[2];
     const key = `get-tail-${hash}`;
 
     const cachedResponse = await CACHE.get(key);

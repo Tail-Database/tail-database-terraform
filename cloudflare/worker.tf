@@ -32,7 +32,7 @@ resource "cloudflare_worker_route" "get_tail_route" {
 
   zone_id     = cloudflare_zone.taildatabase.id
   script_name = "get-tail"
-  pattern     = "${each.value}-api.${var.zone}/tail"
+  pattern     = "${each.value}-api.${var.zone}/tail/*"
 }
 
 resource "cloudflare_worker_script" "search_index_script" {
