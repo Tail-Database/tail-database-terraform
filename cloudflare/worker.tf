@@ -25,6 +25,16 @@ resource "cloudflare_worker_script" "get_tail_script" {
   }
 }
 
+resource "cloudflare_worker_route" "get_tail_route" {
+  for_each = { for environment in var.environments : environment => environment }
+
+  depends_on = [cloudflare_worker_script.get_tail_script]
+
+  zone_id     = cloudflare_zone.taildatabase.id
+  script_name = "get-tail"
+  pattern     = "${each.value}-api.${var.zone}/tail"
+}
+
 resource "cloudflare_worker_script" "search_index_script" {
   for_each = { for environment in var.environments : environment => environment }
 
@@ -52,6 +62,16 @@ resource "cloudflare_worker_script" "search_index_script" {
   }
 }
 
+resource "cloudflare_worker_route" "search_index_route" {
+  for_each = { for environment in var.environments : environment => environment }
+
+  depends_on = [cloudflare_worker_script.search_index_script]
+
+  zone_id     = cloudflare_zone.taildatabase.id
+  script_name = "search-index"
+  pattern     = "${each.value}-api.${var.zone}/search-index"
+}
+
 resource "cloudflare_worker_script" "get_tails_script" {
   for_each = { for environment in var.environments : environment => environment }
 
@@ -77,4 +97,14 @@ resource "cloudflare_worker_script" "get_tails_script" {
     name = "R2_SECRET_KEY"
     text = var.r2_secret_key
   }
+}
+
+resource "cloudflare_worker_route" "get_tails_route" {
+  for_each = { for environment in var.environments : environment => environment }
+
+  depends_on = [cloudflare_worker_script.get_tails_script]
+
+  zone_id     = cloudflare_zone.taildatabase.id
+  script_name = "get-tails"
+  pattern     = "${each.value}-api.${var.zone}/tails"
 }
