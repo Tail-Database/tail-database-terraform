@@ -1,3 +1,6 @@
 zone              = "taildatabase.com"
 kv_namespace_name = "tail-database"
-environments      = ["testnet10"]
+environments      = [
+    "testnet10",
+    "mainnet"
+]

@@ -1,7 +1,7 @@
 resource "cloudflare_worker_script" "get_tail_script" {
   for_each = { for environment in var.environments : environment => environment }
 
-  name    = "get-tail"
+  name    = "get-tail-${each.value}"
   content = file("${path.module}/scripts/dist/get-tail.js")
 
   r2_bucket_binding {
@@ -31,14 +31,14 @@ resource "cloudflare_worker_route" "get_tail_route" {
   depends_on = [cloudflare_worker_script.get_tail_script]
 
   zone_id     = cloudflare_zone.taildatabase.id
-  script_name = "get-tail"
+  script_name = "get-tail-${each.value}"
   pattern     = "${each.value}-api.${var.zone}/tail/*"
 }
 
 resource "cloudflare_worker_script" "search_index_script" {
   for_each = { for environment in var.environments : environment => environment }
 
-  name    = "search-index"
+  name    = "search-index-${each.value}"
   content = file("${path.module}/scripts/dist/search-index.js")
 
   r2_bucket_binding {
@@ -68,14 +68,14 @@ resource "cloudflare_worker_route" "search_index_route" {
   depends_on = [cloudflare_worker_script.search_index_script]
 
   zone_id     = cloudflare_zone.taildatabase.id
-  script_name = "search-index"
+  script_name = "search-index-${each.value}"
   pattern     = "${each.value}-api.${var.zone}/search-index"
 }
 
 resource "cloudflare_worker_script" "get_tails_script" {
   for_each = { for environment in var.environments : environment => environment }
 
-  name    = "get-tails"
+  name    = "get-tails-${each.value}"
   content = file("${path.module}/scripts/dist/get-tails.js")
 
   r2_bucket_binding {
@@ -105,6 +105,6 @@ resource "cloudflare_worker_route" "get_tails_route" {
   depends_on = [cloudflare_worker_script.get_tails_script]
 
   zone_id     = cloudflare_zone.taildatabase.id
-  script_name = "get-tails"
+  script_name = "get-tails-${each.value}"
   pattern     = "${each.value}-api.${var.zone}/tails"
 }
