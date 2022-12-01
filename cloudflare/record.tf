@@ -29,16 +29,6 @@ resource "cloudflare_record" "legacy_images" {
 }
 
 # THIS IS FOR THE LEGACY TAILDATABASE SITE - WILL BE REMOVED SOONtm
-resource "cloudflare_record" "root" {
-  zone_id = cloudflare_zone.taildatabase.id
-  name    = "taildatabase.com"
-  value   = "www.taildatabase.com.s3-website-us-west-2.amazonaws.com"
-  type    = "CNAME"
-  ttl     = 1 # auto
-  proxied = false
-}
-
-# THIS IS FOR THE LEGACY TAILDATABASE SITE - WILL BE REMOVED SOONtm
 resource "cloudflare_record" "test" {
   zone_id = cloudflare_zone.taildatabase.id
   name    = "test"
@@ -46,16 +36,6 @@ resource "cloudflare_record" "test" {
   type    = "CNAME"
   ttl     = 1 # auto
   proxied = true
-}
-
-# THIS IS FOR THE LEGACY TAILDATABASE SITE - WILL BE REMOVED SOONtm
-resource "cloudflare_record" "www" {
-  zone_id = cloudflare_zone.taildatabase.id
-  name    = "www"
-  value   = "d1ad9hbazknvo4.cloudfront.net"
-  type    = "CNAME"
-  ttl     = 1 # auto
-  proxied = false
 }
 
 # Domain ownership verification for fcoleman on Keybase
