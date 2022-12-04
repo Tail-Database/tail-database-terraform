@@ -27,3 +27,8 @@ variable "kv_namespace_name" {
   description = "Workers KV Namespace name"
   type        = string
 }
+
+variable "add_tail_endpoint" {
+  description = "Endpoint to be called for adding a TAIL to Tail Database"
+  type        = string
+}

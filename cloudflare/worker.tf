@@ -108,3 +108,25 @@ resource "cloudflare_worker_route" "get_tails_route" {
   script_name = "get-tails-${each.value}"
   pattern     = "${each.value}-api.${var.zone}/tails"
 }
+
+resource "cloudflare_worker_script" "add_tail_script" {
+  for_each = { for environment in var.environments : environment => environment }
+
+  name    = "add-tail-${each.value}"
+  content = file("${path.module}/scripts/dist/add-tail.js")
+
+  plain_text_binding {
+    name = "ADD_TAIL_ENDPOINT"
+    text = var.add_tail_endpoint
+  }
+}
+
+resource "cloudflare_worker_route" "add_tail_route" {
+  for_each = { for environment in var.environments : environment => environment }
+
+  depends_on = [cloudflare_worker_script.add_tail_script]
+
+  zone_id     = cloudflare_zone.taildatabase.id
+  script_name = "add-tail-${each.value}"
+  pattern     = "${each.value}-api.${var.zone}/tail"
+}
