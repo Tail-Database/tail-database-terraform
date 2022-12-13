@@ -4,3 +4,4 @@ environments      = [
     "testnet10",
     "mainnet"
 ]
+add_tail_endpoint = "http://mainframe.taildatabase.com:8080/tail"
