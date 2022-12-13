@@ -1,9 +1,23 @@
 declare var ADD_TAIL_ENDPOINT: string;
 
 const addTail = async (req: Request) => {
-    // This is a point of centralization which will eventually be replaced by a DAO
+    if (req.method === 'OPTIONS') {
+        return new Response(
+            null,
+            {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Allow-Methods': 'OPTIONS,POST',
+                },
+                status: 204
+            }
+        );
+    }
+
     const body = await req.json();
 
+    // This is a point of centralization which will eventually be replaced by a DAO
     const response = await fetch(ADD_TAIL_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -16,9 +30,9 @@ const addTail = async (req: Request) => {
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'POST',
-                'content-type': 'application/json'
+                'Content-Type': 'application/json'
             },
-            status: 200
+            status: response.status
         }
     );
 };
