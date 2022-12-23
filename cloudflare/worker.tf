@@ -130,3 +130,25 @@ resource "cloudflare_worker_route" "add_tail_route" {
   script_name = "add-tail-${each.value}"
   pattern     = "${each.value}-api.${var.zone}/tail"
 }
+
+resource "cloudflare_worker_script" "auth_script" {
+  for_each = { for environment in var.environments : environment => environment }
+
+  name    = "auth-${each.value}"
+  content = file("${path.module}/scripts/dist/auth.js")
+
+  plain_text_binding {
+    name = "AUTH_ENDPOINT"
+    text = var.auth_endpoint
+  }
+}
+
+resource "cloudflare_worker_route" "auth_route" {
+  for_each = { for environment in var.environments : environment => environment }
+
+  depends_on = [cloudflare_worker_script.auth_script]
+
+  zone_id     = cloudflare_zone.taildatabase.id
+  script_name = "auth-${each.value}"
+  pattern     = "${each.value}-api.${var.zone}/auth/*"
+}

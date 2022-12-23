@@ -32,3 +32,8 @@ variable "add_tail_endpoint" {
   description = "Endpoint to be called for adding a TAIL to Tail Database"
   type        = string
 }
+
+variable "auth_endpoint" {
+  description = "Endpoint to be called to authenticate with Tail Database"
+  type        = string
+}
