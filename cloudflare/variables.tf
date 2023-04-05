@@ -37,3 +37,8 @@ variable "auth_endpoint" {
   description = "Endpoint to be called to authenticate with Tail Database"
   type        = string
 }
+
+variable "reveal_endpoint" {
+  description = "Endpoint to be called to get reveal and eve coin id"
+  type        = string
+}
